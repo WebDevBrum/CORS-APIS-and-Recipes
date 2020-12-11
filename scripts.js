@@ -4,7 +4,7 @@ const proxy = "https://cors-anywhere.herokuapp.com/";
 async function fetchRecipes(query) {
   const res = await fetch(`${proxy}${baseEndPoint}?q=${query}`);
   const data = await res.json();
-  console.log(data);
+  return data;
 }
 
 fetchRecipes("pizza");

@@ -13,12 +13,16 @@ async function handleSubmit(event) {
   event.preventDefault();
   const el = event.currentTarget;
   console.log(form.query.value);
+  fetchAndDisplay(form.query.value);
+}
+
+async function fetchAndDisplay(query) {
   // turn the form off
-  el.submit.disabled = true;
+  form.submit.disabled = true;
   // submit the search
-  const recipes = await fetchRecipes(el.query.value);
+  const recipes = await fetchRecipes(query);
   console.log(recipes);
-  el.submit.disabled = false;
+  form.submit.disabled = false;
   displayRecipes(recipes.results);
 }
 
@@ -32,10 +36,12 @@ function displayRecipes(recipes) {
         recipe.thumbnail &&
         `<img src="${recipe.thumbnail}" alt="${recipe.thumbnail}"/>`
       }
+      <a href="${recipe.href}">View Recipe →</a>
       </div>`
   );
   recipesGrid.innerHTML = html.join("");
 }
 
 form.addEventListener("submit", handleSubmit);
-fetchRecipes("pizza");
+// on page load run it with pizza
+fetchAndDisplay("pizza");

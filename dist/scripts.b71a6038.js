@@ -132,13 +132,17 @@ async function fetchRecipes(query) {
 async function handleSubmit(event) {
   event.preventDefault();
   const el = event.currentTarget;
-  console.log(form.query.value); // turn the form off
+  console.log(form.query.value);
+  fetchAndDisplay(form.query.value);
+}
 
-  el.submit.disabled = true; // submit the search
+async function fetchAndDisplay(query) {
+  // turn the form off
+  form.submit.disabled = true; // submit the search
 
-  const recipes = await fetchRecipes(el.query.value);
+  const recipes = await fetchRecipes(query);
   console.log(recipes);
-  el.submit.disabled = false;
+  form.submit.disabled = false;
   displayRecipes(recipes.results);
 }
 
@@ -148,12 +152,14 @@ function displayRecipes(recipes) {
       <h2>${recipe.title}</h2>
       <p>${recipe.ingredients}</p>
       ${recipe.thumbnail && `<img src="${recipe.thumbnail}" alt="${recipe.thumbnail}"/>`}
+      <a href="${recipe.href}">View Recipe →</a>
       </div>`);
   recipesGrid.innerHTML = html.join("");
 }
 
-form.addEventListener("submit", handleSubmit);
-fetchRecipes("pizza");
+form.addEventListener("submit", handleSubmit); // on page load run it with pizza
+
+fetchAndDisplay("pizza");
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -182,7 +188,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54900" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51451" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
